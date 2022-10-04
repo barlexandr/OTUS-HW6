@@ -22,6 +22,7 @@ public class Application {
 
     public void tryWithResourceOutputException() {
         try (Connection connection = new Connection()) {
+            connection.open();
             System.out.println("Work");
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
@@ -32,6 +33,7 @@ public class Application {
         try {
             try {
                 try (Connection connection = new Connection()) {
+                    connection.open();
                     System.out.println("Work");
                 } catch (Exception e) {
                     throw new ExceptionInConnection("exception in connection");
@@ -49,10 +51,11 @@ public class Application {
         for (int i = 0; i < MAX_DELAY; i++) {
             try {
                 server.setConnection(new Connection());
+                server.start();
                 System.out.println("domain.Connection is enabled");
                 break;
             } catch (IOException e) {
-                System.out.println("domain.Connection number " + i + " : " + e.getMessage());
+                System.out.println("domain.Connection number " + (i + 1) + " : " + e.getMessage());
             }
             try {
                 Thread.sleep(TIMEOUT_BETWEEN_CONNECT);
